@@ -1,5 +1,5 @@
-# Life Edit Gene Classifier
- An ML classifier by DIIG Data for Life Edit to detect edited vs unedited genes.
+# Life Edit Cell Classifier
+ An ML classifier by DIIG Data for Life Edit to detect edited vs unedited cells using single-cell DNA expression data.
 
 ## Tech Stack & Techniques
 - Python
