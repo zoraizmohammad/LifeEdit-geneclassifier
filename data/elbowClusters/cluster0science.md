@@ -1,7 +1,6 @@
 # Cluster 0: "Divergent Pseudogene-Enriched Immunoglobulin and Transcriptomic Regulatory Cluster"
 
 Rationale for the Name
-This name emphasizes:
 - **Divergence**: Reflects the genetic variability and evolutionary diversity in the cluster.
 - **Pseudogene Enrichment**: Highlights the significant presence of pseudogenes, indicating a role in gene regulation or evolutionary relics of gene families.
 - **Immunoglobulin and Regulatory Connections**: Accounts for the involvement of immunoglobulin-related sequences and the mention of transcripts, hinting at RNA-based regulatory mechanisms.
