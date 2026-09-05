@@ -22,6 +22,20 @@ An ML classifier by DIIG Data for Life Edit to detect edited vs unedited cells u
 
 ---
 
+## Contents
+
+- [Overview](#overview)
+- [Method](#method)
+- [Datasets](#datasets)
+- [Repository Layout](#repository-layout)
+- [Getting Started](#getting-started)
+- [Tech Stack & Techniques](#tech-stack--techniques)
+- [Useful Links](#useful-links)
+- [Important Notes](#important-notes)
+- [For Future Reference](#for-future-reference)
+- [Team](#team)
+- [License](#license)
+
 ## Overview
 
 Gene editing leaves a signature in the transcriptome, but it is not a single marker you can look up — it is a diffuse shift spread across thousands of genes, most of which are noise. This project asks whether that signature is separable from expression data alone, without knowing in advance which genes matter.
@@ -90,6 +104,27 @@ LifeEdit-geneclassifier/
 │   ├── nlpClusterData/         NLP-derived cluster notes
 │   └── test/                   scratch space for user-generated output
 └── LICENSE
+```
+
+## Getting Started
+
+The project targets a virtualenv named `lifeedit` (see [`.python-version`](.python-version)).
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install pandas numpy scikit-learn plotly streamlit jupyter
+```
+
+Run the notebooks in dependency order — EDA and filtering first, then the elbow sweep, then the classifier:
+
+```bash
+jupyter lab code/
+```
+
+Or launch the interactive dashboard, which performs normalisation, gene filtering and PCA on an uploaded counts file:
+
+```bash
+streamlit run code/classifier_imt/streamlit_app_imt.py
 ```
 
 ## Tech Stack & Techniques
