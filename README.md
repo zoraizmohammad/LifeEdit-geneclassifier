@@ -56,6 +56,42 @@ Each file is a flat comma-separated list of NCBI GeneIDs.
 
 **5. Classification.** A random forest is trained over the nine-cluster representation at the 1.6 / 250 threshold. The fitted model is committed at [`random_forest_gene_classifier_9Clusters_16_250.pkl`](code/Elbow_mz/elbowClassifier/random_forest_gene_classifier_9Clusters_16_250.pkl), with per-cluster outputs in [`data/elbowClusterData/clusterTestresults/`](data/elbowClusterData/clusterTestresults).
 
+## Datasets
+
+| File | Contents |
+|---|---|
+| [`GSE218462_raw_counts_GRCh38.p13_NCBI.tsv`](data/GSE218462_raw_counts_GRCh38.p13_NCBI.tsv) | Raw counts, GEO accession GSE218462, GRCh38.p13 |
+| [`GSE218463_raw_counts_GRCh38.p13_NCBI.tsv`](data/GSE218463_raw_counts_GRCh38.p13_NCBI.tsv) | Raw counts, GEO accession GSE218463, GRCh38.p13 |
+| [`Human.GRCh38.p13.annot.tsv`](data/Human.GRCh38.p13.annot.tsv) | NCBI gene annotations used to join descriptions onto GeneIDs |
+| [`labeled_gene_data.csv`](data/labeled_gene_data.csv) | Labelled matrix produced by the pipeline |
+
+Counts are indexed by `GeneID` with one column per `GSM` sample. Edited and untreated groups are split by mechanism within the normalised frame rather than by source file.
+
+## Repository Layout
+
+```
+LifeEdit-geneclassifier/
+├── code/
+│   ├── EDA/                    exploratory analysis
+│   │   ├── filtering_sj.ipynb        gene relevance filtering
+│   │   ├── graphs_mz.ipynb           expression visualisation
+│   │   └── pca_amy.ipynb             principal component analysis
+│   ├── Elbow_mz/
+│   │   ├── elbowTest_filtered/       elbow sweeps at each filter threshold
+│   │   └── elbowClassifier/          nine-cluster random forest and model
+│   ├── NLP_mz/                 NCBI description parsing and gene-text analysis
+│   └── classifier_imt/
+│       ├── forest_classifier_amy.ipynb
+│       ├── gene_relevance_imt.ipynb
+│       └── streamlit_app_imt.py      interactive PCA and filtering dashboard
+├── data/
+│   ├── 5000 Gene Combinations/ retained gene sets and filtered descriptions
+│   ├── elbowClusterData/       cluster outputs, write-ups, and test results
+│   ├── nlpClusterData/         NLP-derived cluster notes
+│   └── test/                   scratch space for user-generated output
+└── LICENSE
+```
+
 ## Tech Stack & Techniques
 
 - Python
