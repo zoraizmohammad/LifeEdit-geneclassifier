@@ -144,3 +144,18 @@ streamlit run code/classifier_imt/streamlit_app_imt.py
 
 ## For Future Reference
 - Figure out a cleaner data pipeline so we don't need 10 different files for similar data
+
+## Team
+
+Built by **DIIG Data** for **Life Edit**. File suffixes throughout `code/` mark authorship.
+
+| Contributor | Focus |
+|---|---|
+| **Mohammad Zoraiz** — project lead | Elbow clustering, nine-cluster random forest, NLP description pipeline, visualisation |
+| Islam M. Tayeb | Gene relevance analysis, Streamlit dashboard |
+| Amy Liu | Principal component analysis, forest classifier |
+| Soham Jinsi | Gene filtering and exploratory analysis |
+
+## License
+
+Released under the **GNU General Public License v3.0**. See [`LICENSE`](LICENSE) for the full text.
