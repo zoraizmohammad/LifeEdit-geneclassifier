@@ -1,9 +1,69 @@
+<div align="center">
+
 # Life Edit Cell Classifier
- An ML classifier by DIIG Data for Life Edit to detect edited vs unedited cells using single-cell DNA expression data.
+
+### Telling edited cells from unedited ones using single-cell DNA expression alone
+
+[![Project](https://img.shields.io/badge/Project-DIIG%20Data%20%C3%97%20Life%20Edit-1F6B66?style=flat-square)](#overview)
+[![Domain](https://img.shields.io/badge/Domain-Gene%20Editing%20%C2%B7%20Transcriptomics-C2185B?style=flat-square)](#datasets)
+[![Model](https://img.shields.io/badge/Model-Random%20Forest-6E56CF?style=flat-square)](code/Elbow_mz/elbowClassifier)
+[![License](https://img.shields.io/badge/License-GPL%20v3-3DA639?style=flat-square)](LICENSE)
+
+[![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)](#getting-started)
+[![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)](code)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)](code/classifier_imt)
+[![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white)](code)
+[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)](code/classifier_imt/streamlit_app_imt.py)
+[![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=flat-square&logo=plotly&logoColor=white)](code/classifier_imt/streamlit_app_imt.py)
+
+</div>
+
+An ML classifier by DIIG Data for Life Edit to detect edited vs unedited cells using single-cell DNA expression data.
+
+---
+
+## Overview
+
+Gene editing leaves a signature in the transcriptome, but it is not a single marker you can look up — it is a diffuse shift spread across thousands of genes, most of which are noise. This project asks whether that signature is separable from expression data alone, without knowing in advance which genes matter.
+
+The answer the pipeline arrives at is yes, by way of an aggressive feature-selection step. Starting from **39,376 genes across 38 samples**, a statistical filter reduces the space to roughly four thousand genes whose behaviour actually differs between edited and untreated populations. Those genes are then clustered, characterised, and handed to a random forest.
+
+## Method
+
+**1. Normalisation.** Raw NCBI counts are log-transformed with `log2(x + 1)`, then z-scored per gene with `StandardScaler`, so genes with wildly different absolute expression become comparable.
+
+**2. Relevance filtering.** A gene survives if the edited and untreated populations differ meaningfully in either centre or spread:
+
+```
+|median_edited − median_untreated| ≥ min_median_difference
+    OR  std_edited / std_untreated ≥ 1 + min_std_percent_difference / 100
+    OR  std_untreated / std_edited ≥ 1 + min_std_percent_difference / 100
+```
+
+Three thresholds were swept, and the gene sets are committed so results are reproducible without rerunning the filter:
+
+| Gene set | Median difference | Std difference | Genes retained |
+|---|---:|---:|---:|
+| [`relevant_genes_1.2_275.txt`](data/5000%20Gene%20Combinations/relevant_genes_1.2_275.txt) | 1.2 | 275% | 4,122 |
+| [`relevant_genes_1.6_250.txt`](data/5000%20Gene%20Combinations/relevant_genes_1.6_250.txt) | 1.6 | 250% | 4,188 |
+| [`relevant_genes_3.0_250.txt`](data/5000%20Gene%20Combinations/relevant_genes_3.0_250.txt) | 3.0 | 250% | 4,050 |
+
+Each file is a flat comma-separated list of NCBI GeneIDs.
+
+**3. Dimensionality and structure.** PCA over the retained expression columns establishes how much variance the surviving genes carry, and an elbow sweep on the resulting space settles on **nine clusters**.
+
+**4. Cluster characterisation.** Each cluster is annotated against NCBI gene descriptions and written up in [`data/elbowClusterData/clusterScience/`](data/elbowClusterData/clusterScience) — for example, cluster 0 resolves to a *"Divergent Pseudogene-Enriched Immunoglobulin and Transcriptomic Regulatory Cluster."* This is the step that turns a cluster index into biology.
+
+**5. Classification.** A random forest is trained over the nine-cluster representation at the 1.6 / 250 threshold. The fitted model is committed at [`random_forest_gene_classifier_9Clusters_16_250.pkl`](code/Elbow_mz/elbowClassifier/random_forest_gene_classifier_9Clusters_16_250.pkl), with per-cluster outputs in [`data/elbowClusterData/clusterTestresults/`](data/elbowClusterData/clusterTestresults).
 
 ## Tech Stack & Techniques
+
 - Python
 - Jupyter
+- pandas and NumPy for the expression matrices
+- scikit-learn for `StandardScaler`, `PCA`, and the random forest
+- Streamlit and Plotly for the interactive dashboard
+- Statistical gene relevance filtering, elbow-method cluster selection, and NLP over NCBI gene descriptions
 
 ## Useful Links
 - [Google Drive](https://drive.google.com/drive/folders/1ohv7aq8I2rCBZCLGXtBFtLMKm3vwiCHX)
