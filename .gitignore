@@ -6,3 +6,17 @@ venv/
 code/classifier_imt/repomix-output.txt
 code/EDA_sj/repomix-output.txt
 output.png
+
+# macOS
+.DS_Store
+._*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+
+# User generated
+data/localData/
