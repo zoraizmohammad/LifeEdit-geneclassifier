@@ -1,6 +1,6 @@
 <div align="center">
 
-# Life Edit Cell Classifier
+# CRISPR SignalEngine: Cell Classifier produced in partnership with LifeEdit (aq. NovoNordisk)
 
 ### Telling edited cells from unedited ones using single-cell DNA expression alone
 
